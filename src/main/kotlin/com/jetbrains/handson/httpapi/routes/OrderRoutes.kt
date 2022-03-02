@@ -2,6 +2,7 @@ package com.jetbrains.handson.httpapi.routes
 
 import com.jetbrains.handson.httpapi.models.*
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
@@ -48,9 +49,11 @@ fun Route.totalizeOrderRoute() {
 
 fun Application.registerOrderRoutes() {
     routing {
-        listOrdersRoute()
-        getOrderRoute()
-        addOrderRoute()
-        totalizeOrderRoute()
+        authenticate("auth-jwt") {
+            listOrdersRoute()
+            getOrderRoute()
+            addOrderRoute()
+            totalizeOrderRoute()
+        }
     }
 }
